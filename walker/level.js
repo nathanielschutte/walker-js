@@ -39,9 +39,13 @@ export class Level {
         path.parts.push(new PathPartBezier(400, 600, 200, 500, 500, 0, 550, 50));
         state.addPath(path);
         
-        state.addTower(new Tower(state, 200, 100, towers.TOWER_BASIC.id));
+        const tower1 = new Tower(state, 200, 100, towers.TOWER_BASIC.id);
+        tower1.addUpgrade(towers.TOWER_BASIC.upgrades.PiercingShot);
+        tower1.targettingMode = 'strongest';
+        state.addTower(tower1);
         
         const tower2 = new Tower(state, 200, 250, towers.TOWER_BASIC.id);
+        tower2.targettingMode = 'last';
         tower2.addUpgrade(towers.TOWER_BASIC.upgrades.FasterFiring);
         state.addTower(tower2);
         

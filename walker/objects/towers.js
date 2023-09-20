@@ -8,7 +8,7 @@ export const TOWER_BASIC = {
             name: 'Faster Firing',
             cost: 100,
             effect: (tower) => {
-                tower.roundsPerSecond *= 2;
+                tower.roundsPerSecond *= 1.5;
             }
         },
         PiercingShot: {

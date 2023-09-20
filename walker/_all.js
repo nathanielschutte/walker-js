@@ -104,12 +104,18 @@ export class State {
             this.removeTraveller(traveller);
         });
 
-        this.travellersByDistance = this.travellers.slice().sort((a, b) => {
-            a.pathTotalDistance - b.pathTotalDistance;
+        this.travellersByDistance = this.travellers.slice();
+        this.travellersByDistance.sort((a, b) => {
+            return b.pathTotalDistance - a.pathTotalDistance;
         });
 
-        this.travellersByStrength = this.travellers.slice().sort((a, b) => {
-            a.maxHealth - b.maxHealth;
+        this.travellersByStrength = this.travellersByDistance.slice();
+        this.travellersByStrength.sort((a, b) => {
+            const healthDiff = b.maxHealth - a.maxHealth;
+            if (healthDiff !== 0) {
+                return healthDiff;
+            }
+            return b.pathTotalDistance - a.pathTotalDistance;
         });
     
         this.towers.forEach(tower => {
@@ -191,12 +197,13 @@ export class State {
         this.particles.splice(index, 1);
     }
 
-    acquireTarget(tower, currentTarget) {
+    acquireTarget(tower, currentTarget, stickyTarget) {
+        stickyTarget = stickyTarget === true;
         const mode = tower.targettingMode || 'first';
 
         let travellerList = this.travellers;
 
-        if (mode === 'first') {
+        if (mode === 'first' || mode === 'last') {
             travellerList = this.travellersByDistance;
         } else if (mode === 'strongest') {
             travellerList = this.travellersByStrength;
@@ -204,14 +211,25 @@ export class State {
 
         let target;
         let stillInRange = false;
-        if (currentTarget) {
+        if (stickyTarget && currentTarget) {
             target = currentTarget.ref;
             stillInRange = dist({ x: target.x, y: target.y }, { x: tower.x, y: tower.y }) < tower.targettingRange;
         }
         if (!stillInRange) {
-            target = travellerList.find(traveller => {
-                return dist({ x: traveller.x, y: traveller.y }, { x: tower.x, y: tower.y }) < tower.targettingRange;
-            });
+            for (let i = 0; i < travellerList.length; i++) {
+                let j = i;
+                if (mode === 'last') {
+                    j = travellerList.length - 1;
+                }
+                const traveller = travellerList[j];
+                // if (i > 0 && traveller.pathTotalDistance - travellerList[i - 1].pathTotalDistance >= 0) {
+                //     console.log(`WARNING: travellers not sorted: ${traveller.pathTotalDistance} >= ${travellerList[i - 1].pathTotalDistance}`);
+                // }
+                if (dist({ x: traveller.x, y: traveller.y }, { x: tower.x, y: tower.y }) < tower.targettingRange) {
+                    target = traveller;
+                    break;
+                }
+            }
         }
 
         if (!target) {
@@ -239,7 +257,7 @@ export class State {
                     traveller.health -= damage;
                     if (traveller.health <= 0 && traveller.baseType === 'bloon') {
                         if (traveller.next) {
-                            console.log(`popped a ${traveller.type}, spawning ${traveller.next.count} ${traveller.next.type}`);
+                            //console.log(`popped a ${traveller.type}, spawning ${traveller.next.count} ${traveller.next.type}`);
                             for (let i = 0; i < traveller.next.count; i++) {
                                 const newTraveller = new Traveller(traveller.x, traveller.y, traveller.path, traveller.next.type);
                                 newTraveller.pathIndex = traveller.pathIndex;
@@ -549,7 +567,7 @@ export class Tower {
     update() {
         if (this.state.travellers.length > 0) {
             // sort of a 'system' between these to entity types via state
-            this.state.acquireTarget(this, this.target || null);
+            this.state.acquireTarget(this, this.target || null, false);
         }
 
         const now = Date.now();
@@ -731,11 +749,14 @@ export class Traveller {
                 actualDist = dist(part.f(this.pathT + moveT), part.f(this.pathT));
                 iteration++;
             }
+
+            this.pathTotalDistance += actualDist;
+        } else {
+            this.pathTotalDistance += travelDist;
         }
 
         this.pathT += moveT;
         this.pathTotalT += moveT;
-        this.pathTotalDistance += travelDist;
 
         if (this.pathT >= 1) {
             const remainingDistance = (this.pathT - 1) * part.length;
@@ -805,6 +826,13 @@ export class Traveller {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
             ctx.fill();
+        }
+
+        if (DEBUG) {
+            ctx.fillStyle = "black";
+            // draw text
+            ctx.font = "12px Arial";
+            // ctx.fillText(`${this.pathTotalDistance.toFixed(1)}`, this.x, this.y);
         }
     }
 }
