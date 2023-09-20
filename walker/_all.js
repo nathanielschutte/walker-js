@@ -219,7 +219,7 @@ export class State {
             for (let i = 0; i < travellerList.length; i++) {
                 let j = i;
                 if (mode === 'last') {
-                    j = travellerList.length - 1;
+                    j = travellerList.length - 1 - i;
                 }
                 const traveller = travellerList[j];
                 // if (i > 0 && traveller.pathTotalDistance - travellerList[i - 1].pathTotalDistance >= 0) {
@@ -531,7 +531,7 @@ export class Tower {
             this.roundRadius = 5;
             this.roundSpray = 0.1;
             this.roundType = 'pellet';
-            this.targettingRange = 200;
+            this.targettingRange = 150;
             this.roundCollats = 0;
             this.roundDamage = 1;
         }

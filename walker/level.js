@@ -46,7 +46,10 @@ export class Level {
         
         const tower2 = new Tower(state, 200, 250, towers.TOWER_BASIC.id);
         tower2.targettingMode = 'last';
-        tower2.addUpgrade(towers.TOWER_BASIC.upgrades.FasterFiring);
+        // tower2.addUpgrade(towers.TOWER_BASIC.upgrades.FasterFiring);
+        tower2.addUpgrade(towers.TOWER_BASIC.upgrades.PiercingShot);
+        tower2.addUpgrade(towers.TOWER_BASIC.upgrades.PiercingShot2);
+        tower2.addUpgrade(towers.TOWER_BASIC.upgrades.IncreasedRange);
         state.addTower(tower2);
         
         const tower3 = new Tower(state, 360, 190, towers.TOWER_BASIC.id);
