@@ -1,3 +1,6 @@
+[![Publish](https://github.com/nathanielschutte/walker-js/actions/workflows/publish.yml/badge.svg)](https://github.com/nathanielschutte/walker-js/actions/workflows/publish.yml)
+https://site.coderotate.net/blam/index.html
+
 # walker
 Path traversal, spaghetti ECS, targeting logic, resource layering
 
