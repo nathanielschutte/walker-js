@@ -1,6 +1,6 @@
 {
   "name": "walker",
-  "version": "1.0.0",
+  "version": "v0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,8 +9,8 @@
     "serve": "serve public",
     "line-count": "find walker -name \"*.js\" -exec wc -l {} +"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Nate",
+  "license": "",
   "dependencies": {
     "webpack": "^5.88.2"
   },
