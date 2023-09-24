@@ -1,7 +1,32 @@
+export const TOWER_DEFAULTS = {
+    turretLength: 20,
+    roundsPerSecond: 4,
+    roundsPerShot: 1,
+    roundSpeed: 6,
+    roundDamage: 1,
+    roundRadius: 5,
+    roundSpray: 0.1,
+    roundType: 'pellet',
+    targettingRange: 150,
+    targettingType: 'auto',
+    roundCollats: 0,
+    fireDirection: 'forward',
+};
+
 export const TOWER_BASIC = {
     id: 'basic',
     name: 'Basic Tower',
     cost: 100,
+    turretLength: 20,
+    roundsPerSecond: 4,
+    roundSpeed: 6,
+    roundDamage: 1,
+    roundRadius: 5,
+    roundSpray: 0.05,
+    roundType: 'pellet',
+    targettingRange: 150,
+    targettingType: 'auto',
+    roundCollats: 0,
     upgrades: {
         FasterFiring: {
             id: 'faster-firing',
@@ -36,4 +61,40 @@ export const TOWER_BASIC = {
             }
         }
     }
+}
+
+export const TOWER_GAT = {
+    id: 'gat',
+    name: 'Gatling Gunner',
+    cost: 500,
+    turretLength: 65,
+    roundsPerSecond: 20,
+    roundSpeed: 8,
+    roundDamage: 1,
+    roundRadius: 5,
+    roundSpray: 0.15,
+    roundType: 'pellet',
+    targettingRange: 999,
+    targettingType: 'mouse',
+    roundCollats: 1,
+    upgrades: {}
+}
+
+export const TOWER_SPRAY = {
+    id: 'spray',
+    name: 'Spray Gunner',
+    cost: 300,
+    turretLength: 20,
+    roundsPerSecond: 2,
+    roundsPerShot: 8,
+    roundSpeed: 6,
+    roundDamage: 1,
+    roundRadius: 5,
+    roundSpray: 0,
+    roundType: 'pellet',
+    targettingRange: 75,
+    targettingType: 'auto',
+    roundCollats: 0,
+    fireDirection: 'around',
+    upgrades: {}
 }

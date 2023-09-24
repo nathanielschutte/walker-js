@@ -1,0 +1,24 @@
+{
+    "layers": [
+        "grass0.png",
+        null,
+        null,
+        null,
+        null,
+        null
+    ],
+    "paths": [
+        {
+            "path": [
+                {
+                    "type": "line",
+                    "layer": 0,
+                    "points": [
+                        [0, 125],
+                        [110, 100]
+                    ]
+                }
+            ]
+        }
+    ]
+}

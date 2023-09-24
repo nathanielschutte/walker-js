@@ -10,4 +10,6 @@ npm install
 npm run watch
 ```
 3.
-Open `page.html`
+```
+serve public
+```

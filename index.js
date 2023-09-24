@@ -1,2 +1,4 @@
 import { Scene } from './walker/scene.js';
-new Scene().start();
+const scene = new Scene();
+await scene.load();
+scene.start();
