@@ -3,6 +3,8 @@ import { State } from './state.js';
 
 export class Scene {
     constructor() {
+        this.width = 1000;
+        this.height = 800;
         this.frameNum = 0;
         this.mouse = {
             x: 0,

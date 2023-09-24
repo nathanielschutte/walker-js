@@ -79,27 +79,7 @@ export class Level {
             this.state.addPath(path);
         });
     }
-
-    loadTowers(file) {
-        // return [tower, ...];
-    }
-
-    loadEnemies(file) {
-        // return [enemy, ...];
-    }
-
-    loadProjectiles(file) {
-        // return [projectile, ...];
-    }
-
-    loadUpgrades(file) {
-        // return [upgrade, ...];
-    }
-
-    loadWaves(file) {
-        // return [wave, ...];
-    }
-     
+    
     injectTestLevel() {
         const state = this.state;
         // const path = new Path();
@@ -138,10 +118,10 @@ export class Level {
     }
 
     createTestSpawn() {
-        this.createTestSpawnInterval(100, tr.BLOON_BLUE);
-        this.createTestSpawnInterval(200, tr.BLOON_PINK);
-        this.createTestSpawnInterval(420, tr.BLOON_BLACK);
-        this.createTestSpawnInterval(450, tr.BLOON_WHITE);
+        // this.createTestSpawnInterval(100, tr.BLOON_BLUE);
+        // this.createTestSpawnInterval(200, tr.BLOON_PINK);
+        // this.createTestSpawnInterval(420, tr.BLOON_BLACK);
+        // this.createTestSpawnInterval(450, tr.BLOON_WHITE);
 
         return this;
     }

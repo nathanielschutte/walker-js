@@ -6,9 +6,9 @@ export const LEVEL_LAYER_MAX = 7;
 export const LEVEL_LAYER_MIDDLE = 3;
 
 /* CONTROL */
-export const DEBUG = false;
+export const DEBUG = true;
 
-export const EDIT_MODE = false;
+export const EDIT_MODE = true;
 
 export const PATH_TRAVERSE_ACCURATE = true;
 

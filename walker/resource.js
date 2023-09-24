@@ -101,6 +101,6 @@ export class LevelResource extends Resource {
         
         const drawLayer = this.layers[layer];
 
-        ctx.drawImage(drawLayer, 0, 0);
+        ctx.drawImage(drawLayer, 0, 0, 800, 600);
     }
 }

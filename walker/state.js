@@ -1,6 +1,7 @@
 import * as constants from './constants.js';
 import { Particle } from './particle.js';
 import { Traveller } from './traveller.js';
+import { Spawner } from './spawner.js';
 import { dist } from './util.js';
 
 /* DATA */
@@ -10,6 +11,7 @@ export class State {
         this.paths = []; // array of Path
         this.hoveredPath = -1;
         this.hoveredPart = -1;
+        this.spawner = new Spawner(this);
         
         this.travellers = []; // array of Traveller
         this.travellersByDistance = []; // array of Traveller
@@ -20,18 +22,63 @@ export class State {
         this.towers = []; // array of Tower
         this.particles = []; // array of Particle
 
+        this.difficulty = 1;
+        this.mode = 'play';
+        this.playState = 'paused';
+
+        this.resetToZero();
+
         this.time = 0;
         this.lastTime = 0;
-
-        this.lives = 100;
 
         this.globalTravellerId = 0;
     }
 
+    resetToZero() {
+        this.round = 0;
+        this.frameNum = 0;
+
+        if (this.difficulty === 1) {    
+            this.maxLives = 100;
+        }
+
+        this.lives = this.maxLives;
+
+        this.resetToNewRound();
+    }
+
+    resetToNewRound() {
+        this.frameNumRound = 0;
+    }
+
     update() {
+        this.time = Date.now();
+
+        if (this.lastTime === 0) {
+            this.lastTime = this.time;
+        }
+
+        const dt = this.time - this.lastTime;
+
         this.paths.forEach(path => {
             path.update(this.scene);
         });
+
+        if (this.mode !== 'play') {
+            return;
+        }
+
+        if (this.mode === 'play') {
+            this.frameNum++;
+
+            if (this.playMode === 'playing') {
+                this.frameNumRound++;
+            }
+        }
+
+        if (this.playState !== 'playing') {
+            return;
+        }
 
         const travellerDestroy = [];
         this.travellers.forEach(traveller => {
