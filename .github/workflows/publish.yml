@@ -5,6 +5,13 @@ on:
   push:
     branches:
       - main
+    paths:
+      - .github/workflows/publish.yml
+      - package-lock.json
+      - webpack.config.js
+      - walker/**/*
+      - public/res/**/*
+      - public/index.html
 
 jobs:
   publish:
