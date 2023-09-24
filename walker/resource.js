@@ -71,17 +71,20 @@ export class LevelResource extends Resource {
             pathData.path.forEach((pathPartData, pathPartIndex) => {
                 const points = pathPartData.points;
                 const pathErorMsg = `[Resource ${this.type}] invalid path part data for path ${pathIndex} part ${pathPartIndex}`;
+                let newPart;
                 if (pathPartData.type === 'line') {
                     if (points.length !== 2) {
                         throw new Error(pathErorMsg);
                     }
-                    path.addPart(new PathPartLine(points[0][0], points[0][1], points[1][0], points[1][1]));
+                    newPart = new PathPartLine(points[0][0], points[0][1], points[1][0], points[1][1]);
                 } else if (pathPartData.type === 'bezier') {
                     if (points.length !== 4) {
                         throw new Error(pathErorMsg);
                     }
-                    path.addPart(new PathPartBezier(points[0][0], points[0][1], points[1][0], points[1][1], points[2][0], points[2][1], points[3][0], points[3][1]));
+                    newPart = new PathPartBezier(points[0][0], points[0][1], points[1][0], points[1][1], points[2][0], points[2][1], points[3][0], points[3][1]);
                 }
+                newPart.layer = pathPartData.layer;
+                path.addPart(newPart);
             });
             this.paths.push(path);
         });

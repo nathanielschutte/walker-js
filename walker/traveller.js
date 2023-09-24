@@ -27,7 +27,7 @@ export class Traveller {
         this.trailOn = false;
         this.trail = [];
 
-        this.lifetime = 2000;
+        this.lifetime = 9999;
         this.lifespent = 0;
 
         this.setTravellerStats(type);
@@ -54,6 +54,14 @@ export class Traveller {
 
     usingPath() {
         return this.path !== null && this.path !== undefined;
+    }
+
+    getPathLayer() {
+        if (!this.usingPath()) {
+            return null;
+        }
+
+        return this.path.parts[this.pathIndex].layer;
     }
 
     departFromPath(part, remainingDistance) {

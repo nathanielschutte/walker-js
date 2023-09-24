@@ -22,6 +22,8 @@ export class Tower {
         this.target = null;
         this.targettingMode = 'first';
         this.targettingRange = 80;
+        this.targettingType = 'auto';
+        this.fireDirection = 'forward';
 
         this.lastRoundFiredTime = null;
 

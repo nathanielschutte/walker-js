@@ -11,11 +11,11 @@ export class Particle {
         this.yv = yv;
         this.radius = 4;
         this.type = type;
-        this.damage = damage || 1;
+        this.damage = damage || 0;
 
         this.hitlist = [];
         
-        this.life = 10;
+        this.life = 9999;
         this.collats = collats || 0;
 
         const mag = Math.sqrt(Math.pow(this.xv, 2) + Math.pow(this.yv, 2));
@@ -23,14 +23,23 @@ export class Particle {
 
         if (this.type === 'pellet') {
             this.radius = 4;
+        } else if (this.type === 'pop') {
+            this.radius = 22;
+            this.life = 6;
         }
     }
 
     update() {
+        this.life -= 1;
+
+        if (this.type === 'pop') {
+            this.radius = 22 * (this.life / 6);
+            return;
+        }
+
         this.x += this.xv;
         this.y += this.yv;
         this.travelDist += this.speed;
-        this.life -= 0.05;
 
         const hitIds = this.state.travellerColliding(this.x, this.y, this.radius, this.damage, this.hitlist);
         if (hitIds !== false) {
@@ -50,9 +59,12 @@ export class Particle {
     draw(ctx) {
         if (this.type === 'pellet') {
             ctx.fillStyle = "black";
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, 4, 0, constants.FULL_CIRCLE);
-            ctx.fill();
+        } else if (this.type === 'pop') {
+            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
         }
+
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, constants.FULL_CIRCLE);
+        ctx.fill();
     }
 }

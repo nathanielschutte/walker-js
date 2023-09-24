@@ -69,14 +69,14 @@ export const TOWER_GAT = {
     cost: 500,
     turretLength: 65,
     roundsPerSecond: 20,
-    roundSpeed: 8,
+    roundSpeed: 12,
     roundDamage: 1,
     roundRadius: 5,
-    roundSpray: 0.15,
+    roundSpray: 0.11,
     roundType: 'pellet',
     targettingRange: 999,
     targettingType: 'mouse',
-    roundCollats: 1,
+    roundCollats: 2,
     upgrades: {}
 }
 
@@ -85,8 +85,8 @@ export const TOWER_SPRAY = {
     name: 'Spray Gunner',
     cost: 300,
     turretLength: 20,
-    roundsPerSecond: 2,
-    roundsPerShot: 8,
+    roundsPerSecond: 3,
+    roundsPerShot: 12,
     roundSpeed: 6,
     roundDamage: 1,
     roundRadius: 5,

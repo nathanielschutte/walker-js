@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "npx webpack --mode=production",
-    "watch": "npx webpack --mode=development --watch"
+    "watch": "npx webpack --mode=development --watch",
+    "serve": "serve public",
+    "line-count": "find walker -name \"*.js\" -exec wc -l {} +"
   },
   "author": "",
   "license": "ISC",

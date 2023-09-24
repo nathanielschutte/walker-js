@@ -101,7 +101,7 @@ export class Level {
     }
      
     injectTestLevel() {
-        // const state = this.state;
+        const state = this.state;
         // const path = new Path();
         // path.parts.push(new PathPartLine(100, 100, 200, 200));
         // path.parts.push(new PathPartLine(200, 200, 300, 100));
@@ -115,31 +115,33 @@ export class Level {
         // tower1.targettingMode = 'strongest';
         // state.addTower(tower1);
         
-        // const tower2 = new Tower(state, 200, 250, towers.TOWER_BASIC);
-        // tower2.targettingMode = 'last';
-        // // tower2.addUpgrade(towers.TOWER_BASIC.upgrades.FasterFiring);
-        // tower2.addUpgrade(towers.TOWER_BASIC.upgrades.PiercingShot);
-        // tower2.addUpgrade(towers.TOWER_BASIC.upgrades.PiercingShot2);
-        // tower2.addUpgrade(towers.TOWER_BASIC.upgrades.IncreasedRange);
-        // state.addTower(tower2);
+        const tower2 = new Tower(state, 490, 350, towers.TOWER_BASIC);
+        tower2.targettingMode = 'first';
+        tower2.addUpgrade(towers.TOWER_BASIC.upgrades.FasterFiring);
+        tower2.addUpgrade(towers.TOWER_BASIC.upgrades.PiercingShot);
+        tower2.addUpgrade(towers.TOWER_BASIC.upgrades.PiercingShot2);
+        tower2.addUpgrade(towers.TOWER_BASIC.upgrades.IncreasedRange);
+        state.addTower(tower2);
         
-        // const tower3 = new Tower(state, 360, 190, towers.TOWER_SPRAY);
-        // state.addTower(tower3);
+        const tower3 = new Tower(state, 290, 170, towers.TOWER_SPRAY);
+        state.addTower(tower3);
         
-        // const tower4 = new Tower(state, 600, 450, towers.TOWER_BASIC);
-        // tower4.addUpgrade(towers.TOWER_BASIC.upgrades.FasterFiring);
-        // tower4.addUpgrade(towers.TOWER_BASIC.upgrades.PiercingShot);
-        // state.addTower(tower4);
+        const tower4 = new Tower(state, 90, 290, towers.TOWER_BASIC);
+        tower4.addUpgrade(towers.TOWER_BASIC.upgrades.FasterFiring);
+        tower4.addUpgrade(towers.TOWER_BASIC.upgrades.PiercingShot);
+        state.addTower(tower4);
 
-        // const gat = new Tower(state, 900, 450, towers.TOWER_GAT);
-        // state.addTower(gat);
+        const gat = new Tower(state, 750, 250, towers.TOWER_GAT);
+        state.addTower(gat);
 
         return this;
     }
 
     createTestSpawn() {
-        this.createTestSpawnInterval(1000, tr.BLOON_RED);
-        // this.createTestSpawnInterval(450, tr.BLOON_WHITE);
+        this.createTestSpawnInterval(100, tr.BLOON_BLUE);
+        this.createTestSpawnInterval(200, tr.BLOON_PINK);
+        this.createTestSpawnInterval(420, tr.BLOON_BLACK);
+        this.createTestSpawnInterval(450, tr.BLOON_WHITE);
 
         return this;
     }

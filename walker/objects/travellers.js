@@ -71,7 +71,7 @@ export const BLOON_BLUE = {
 export const BLOON_GREEN = {
     id: 'bloon-green',
     health: 1,
-    speed: 1.4,
+    speed: 1.5,
     damage: 4,
     radius: 14,
     next: {
@@ -83,7 +83,7 @@ export const BLOON_GREEN = {
 export const BLOON_YELLOW = {
     id: 'bloon-yellow',
     health: 1,
-    speed: 1.6,
+    speed: 1.8,
     damage: 5,
     radius: 15,
     next: {
@@ -95,9 +95,9 @@ export const BLOON_YELLOW = {
 export const BLOON_PINK = {
     id: 'bloon-pink',
     health: 1,
-    speed: 1.8,
+    speed: 2.0,
     damage: 6,
-    radius: 16,
+    radius: 15,
     next: {
         type: BLOON_YELLOW,
         count: 1,

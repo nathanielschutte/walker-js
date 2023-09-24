@@ -1,4 +1,5 @@
 import * as constants from './constants.js';
+import { Particle } from './particle.js';
 import { Traveller } from './traveller.js';
 import { dist } from './util.js';
 
@@ -29,7 +30,7 @@ export class State {
 
     update() {
         this.paths.forEach(path => {
-            path.update(this.scene.mouse);
+            path.update(this.scene);
         });
 
         const travellerDestroy = [];
@@ -91,44 +92,44 @@ export class State {
 
         this.scene.setDebugField('travellers', this.travellers.length);
         this.scene.setDebugField('particles', this.particles.length);
-
-        if (this.scene.keyPress('s')) {
-            this.paths[0].save();
-        }
     }
 
     draw(ctx) {
-        // layers 0..2
-        for (let i = 0; i < 3; i++) {
-            this.layerResources.forEach(resource => {
-                resource.draw(ctx, i);
-            });
-        }
+        const layers = Array.from({length: constants.LEVEL_LAYER_MAX}, () => {
+            return {
+                travellers: [],
+            };
+        });
 
-        // layer 3
         this.travellers.forEach(traveller => {
-            traveller.draw(ctx);
+            layers[traveller.getPathLayer()].travellers.push(traveller);
         });
 
-        // layers 4..6
-        for (let i = 4; i < 7; i++) {
+        // LAYERED layers
+        for (let i = 0; i < constants.LEVEL_LAYER_MAX; i++) {
             this.layerResources.forEach(resource => {
                 resource.draw(ctx, i);
             });
-        }
-    
-        // layer 7
-        this.towers.forEach(tower => {
-            tower.draw(ctx);
-        });
 
-        // layer 8
+            // TOWER (mid) layer
+            if (i === constants.LEVEL_LAYER_MIDDLE) {
+                this.towers.forEach(tower => {
+                    tower.draw(ctx);
+                });
+            }
+
+            layers[i].travellers.forEach(traveller => {
+                traveller.draw(ctx);
+            });
+        }
+
+        // TOP layer
         this.particles.forEach(particle => {
             particle.draw(ctx);
         });
 
-        // DEBUG layers
-        if (constants.DEBUG) {
+        // DEBUG and EDIT layers
+        if (constants.DEBUG || constants.EDIT_MODE) {
             this.paths.forEach(path => {
                 path.draw(ctx);
             });
@@ -180,7 +181,6 @@ export class State {
 
 
     /* SYSTEMS */
-
     acquireTarget(tower, currentTarget, stickyTarget) {
         stickyTarget = stickyTarget === true;
         const mode = tower.targettingMode || 'first';
@@ -249,6 +249,8 @@ export class State {
                                 newTraveller.pathTotalT = traveller.pathTotalT;
                                 newTraveller.pathTotalDistance = traveller.pathTotalDistance;
                                 newHitlist.push(this.addTraveller(newTraveller));
+
+                                this.particles.push(new Particle(this, traveller.x, traveller.y, 0, 0, 'pop'));
                             }
                         }
 
