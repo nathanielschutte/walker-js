@@ -1,5 +1,7 @@
 # walker
-Path traversal, spaghetti ECS, and targeting logic
+Path traversal, spaghetti ECS, targeting logic, resource layering
+
+![alt text](https://github.com/nathanielschutte/walker-js/blob/main/images/v0.0.1.PNG?raw=true)
 
 1.
 ```
