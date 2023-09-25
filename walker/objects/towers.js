@@ -68,15 +68,15 @@ export const TOWER_GAT = {
     name: 'Gatling Gunner',
     cost: 500,
     turretLength: 65,
-    roundsPerSecond: 20,
-    roundSpeed: 12,
+    roundsPerSecond: 12,
+    roundSpeed: 10,
     roundDamage: 1,
     roundRadius: 5,
-    roundSpray: 0.11,
+    roundSpray: 0.25,
     roundType: 'pellet',
     targettingRange: 999,
     targettingType: 'mouse',
-    roundCollats: 2,
+    roundCollats: 1,
     upgrades: {}
 }
 

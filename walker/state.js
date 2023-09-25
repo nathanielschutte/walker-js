@@ -369,11 +369,10 @@ export class State {
                                 newTraveller.pathTotalT = traveller.pathTotalT;
                                 newTraveller.pathTotalDistance = traveller.pathTotalDistance;
                                 newHitlist.push(this.addTraveller(newTraveller));
-
-                                this.particles.push(new Particle(this, traveller.x, traveller.y, 0, 0, 'pop'));
                             }
                         }
 
+                        this.particles.push(new Particle(this, traveller.x, traveller.y, 0, 0, 'pop'));
                         this.removeTraveller(traveller);
                     }
                 }
