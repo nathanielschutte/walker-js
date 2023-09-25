@@ -118,10 +118,10 @@ export class Level {
     }
 
     createTestSpawn() {
-        this.createTestSpawnInterval(100, tr.BLOON_BLUE);
-        this.createTestSpawnInterval(200, tr.BLOON_PINK);
-        this.createTestSpawnInterval(420, tr.BLOON_BLACK);
-        this.createTestSpawnInterval(450, tr.BLOON_WHITE);
+        // this.createTestSpawnInterval(100, tr.BLOON_BLUE);
+        // this.createTestSpawnInterval(200, tr.BLOON_PINK);
+        // this.createTestSpawnInterval(420, tr.BLOON_BLACK);
+        // this.createTestSpawnInterval(450, tr.BLOON_WHITE);
 
         return this;
     }

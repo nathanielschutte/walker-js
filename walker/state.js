@@ -26,7 +26,7 @@ export class State {
 
         this.difficulty = 1;
         this.mode = this.config.get('mode');
-        this.playState = 'playing';
+        this.playState = 'paused';
 
         this.resetToZero();
 
@@ -34,6 +34,18 @@ export class State {
         this.lastTime = 0;
 
         this.globalTravellerId = 0;
+    }
+
+    clearAll() {
+        this.towers = [];
+        this.travellers = [];
+        this.travellersByDistance = [];
+        this.travellersByStrength = [];
+        this.particles = [];
+    }
+
+    clearParticles() {
+        this.particles = [];
     }
 
     resetToZero() {
@@ -71,6 +83,22 @@ export class State {
         if (this.scene.keyPress('Tab')) {
             this.mode = this.mode === 'play' ? 'edit' : 'play';
             console.log(`[State] tab pressed, switching mode to ${this.mode}`);
+
+            if (this.mode === 'edit') {
+                this.clearParticles();
+                this.resetToNewRound();
+            }
+        }
+
+        if (this.scene.keyPress(' ')) {
+            this.playState = this.playState === 'playing' ? 'paused' : 'playing';
+            console.log(`[State] space pressed, switching play state to ${this.playState}`);
+        }
+
+        if (this.scene.keyPress('r') && this.mode === 'play') {
+            this.resetToZero();
+            this.clearAll();
+            this.playState = 'paused';
         }
 
         if (this.mode !== 'play') {
@@ -194,21 +222,38 @@ export class State {
             this.drawDebug(ctx);
         }
 
-        if (this.mode === 'edit') {
-            this.drawEdit(ctx);
-        }
+        this.drawUi(ctx);
     }
 
 
     /* UI */
-    drawEdit(ctx) {
-        ctx.strokeStyle = "blue";
-        ctx.fillStyle = 'black';
-        ctx.font = '20px Arial';
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'middle';
-        ctx.lineWidth = 1;
-        ctx.fillText(`edit mode`, 10, 20);
+    drawUi(ctx) {
+        if (this.mode === 'edit') {
+            ctx.strokeStyle = "blue";
+            ctx.fillStyle = 'black';
+            ctx.font = '20px Arial';
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.lineWidth = 1;
+            ctx.fillText(`edit mode`, 10, 20);
+        } else if (this.mode === 'play') {
+            if (this.playState === 'playing') {
+                ctx.strokeStyle = "green";
+                ctx.fillStyle = 'lightgreen';
+                ctx.beginPath();
+                ctx.moveTo(10, 10);
+                ctx.lineTo(10, 40);
+                ctx.lineTo(40, 25);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+            } else if (this.playState === 'paused') {
+                ctx.strokeStyle = "red";
+                ctx.fillStyle = 'darkred';
+                ctx.fillRect(10, 10, 10, 30);
+                ctx.fillRect(30, 10, 10, 30);
+            }
+        }
     }
 
     drawDebug(ctx) {

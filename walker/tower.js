@@ -86,16 +86,21 @@ export class Tower {
             shouldFire = true;
         }
 
-        let newTarget = this.state.scene.mouse;
+        let newTarget;
+
 
         if (this.state.travellers.length > 0 && this.targettingType === 'auto') {
             // sort of a 'system' between these to entity types via state
             this.state.acquireTarget(this, this.target || null, false);
-            if (!this.target) {
-                return;
+            if (this.target) {
+                newTarget = this.target.ref;
             }
+        } else if (this.targettingType === 'mouse') {
+            newTarget = this.state.scene.mouse;
+        }
 
-            newTarget = this.target.ref;
+        if (!newTarget) {
+            return;
         }
 
         const distance = dist({x: this.x, y: this.y}, {x: newTarget.x, y: newTarget.y});
