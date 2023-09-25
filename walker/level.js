@@ -129,6 +129,9 @@ export class Level {
     createTestSpawnInterval(interval, type) {
         const { x, y } = this.state.paths[0].parts[0].getOrigin();
         setInterval(() => {
+            if (this.state.travellers.length > 1000) {
+                return;
+            }
             const traveller = new Traveller(x, y, this.state.paths[0], type);
             this.state.addTraveller(traveller);
         }, interval);
