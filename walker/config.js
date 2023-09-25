@@ -3,6 +3,7 @@ import * as constants from './constants.js';
 export class Config {
     constructor(params) {
         this.config = {};
+        return this;
     }
 
     get(key) {
@@ -15,6 +16,7 @@ export class Config {
 
     load() {
         this.config.debug = constants.DEBUG;
-        this.config.edit_mode = constants.EDIT_MODE ? 'edit' : 'play';
+        this.config.mode = constants.EDIT_MODE ? 'edit' : 'play';
+        return this;
     }
 }

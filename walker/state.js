@@ -1,8 +1,9 @@
-import * as constants from './constants.js';
 import { Particle } from './particle.js';
 import { Traveller } from './traveller.js';
 import { Spawner } from './spawner.js';
 import { dist } from './util.js';
+import * as constants from './constants.js';
+import { Config } from './config.js';
 
 /* DATA */
 export class State {
@@ -12,6 +13,7 @@ export class State {
         this.hoveredPath = -1;
         this.hoveredPart = -1;
         this.spawner = new Spawner(this);
+        this.config = new Config().load();
         
         this.travellers = []; // array of Traveller
         this.travellersByDistance = []; // array of Traveller
@@ -23,8 +25,8 @@ export class State {
         this.particles = []; // array of Particle
 
         this.difficulty = 1;
-        this.mode = 'play';
-        this.playState = 'paused';
+        this.mode = this.config.get('mode');
+        this.playState = 'playing';
 
         this.resetToZero();
 
@@ -60,9 +62,16 @@ export class State {
 
         const dt = this.time - this.lastTime;
 
-        this.paths.forEach(path => {
-            path.update(this.scene);
-        });
+        if (this.mode === 'edit') {
+            this.paths.forEach(path => {
+                path.update(this.scene);
+            });
+        }   
+
+        if (this.scene.keyPress('Tab')) {
+            this.mode = this.mode === 'play' ? 'edit' : 'play';
+            console.log(`[State] tab pressed, switching mode to ${this.mode}`);
+        }
 
         if (this.mode !== 'play') {
             return;
@@ -175,12 +184,35 @@ export class State {
             particle.draw(ctx);
         });
 
-        // DEBUG and EDIT layers
-        if (constants.DEBUG || constants.EDIT_MODE) {
+        if (this.config.get('debug') || this.mode === 'edit') {
             this.paths.forEach(path => {
-                path.draw(ctx);
+                path.draw(ctx, this.mode === 'edit');
             });
         }
+
+        if (this.config.get('debug')) {
+            this.drawDebug(ctx);
+        }
+
+        if (this.mode === 'edit') {
+            this.drawEdit(ctx);
+        }
+    }
+
+
+    /* UI */
+    drawEdit(ctx) {
+        ctx.strokeStyle = "blue";
+        ctx.fillStyle = 'black';
+        ctx.font = '20px Arial';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.lineWidth = 1;
+        ctx.fillText(`edit mode`, 10, 20);
+    }
+
+    drawDebug(ctx) {
+
     }
 
 

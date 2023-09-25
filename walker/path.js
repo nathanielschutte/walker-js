@@ -93,10 +93,6 @@ export class PathPartLine extends PathPart {
     update(mouse) {
         super.update(mouse);
 
-        if (!constants.EDIT_MODE) {
-            return;
-        }
-
         if (this.mode === 'follow') {
             this.x2 = mouse.x;
             this.y2 = mouse.y;
@@ -134,18 +130,16 @@ export class PathPartLine extends PathPart {
         ctx.lineTo(this.x2, this.y2);
         ctx.stroke();
 
-        if (constants.EDIT_MODE) {
-            const points = [[this.x1, this.y1], [this.x2, this.y2]];
-            points.forEach((point, index) => {
-                ctx.fillStyle = "red";
-                if (this.hoveredPoint === index) {
-                    ctx.fillStyle = "white";
-                }
-                ctx.beginPath();
-                ctx.arc(point[0], point[1], 2, 0, 2 * Math.PI);
-                ctx.fill();
-            });
-        }
+        const points = [[this.x1, this.y1], [this.x2, this.y2]];
+        points.forEach((point, index) => {
+            ctx.fillStyle = "red";
+            if (this.hoveredPoint === index) {
+                ctx.fillStyle = "white";
+            }
+            ctx.beginPath();
+            ctx.arc(point[0], point[1], 2, 0, 2 * Math.PI);
+            ctx.fill();
+        });
     }
 }
 
@@ -237,10 +231,6 @@ export class PathPartBezier extends PathPart {
     update(mouse) {
         super.update(mouse);
 
-        if (!constants.EDIT_MODE) {
-            return;
-        }
-
         if (this.mode === 'follow') {
             this.x4 = mouse.x;
             this.y4 = mouse.y;
@@ -298,18 +288,16 @@ export class PathPartBezier extends PathPart {
             ctx.stroke();
         }
 
-        if (constants.EDIT_MODE) {
-            const points = [[this.x1, this.y1], [this.x4, this.y4]];
-            points.forEach((point, index) => {
-                ctx.fillStyle = "red";
-                if (this.hoveredPoint === index) {
-                    ctx.fillStyle = "white";
-                }
-                ctx.beginPath();
-                ctx.arc(point[0], point[1], 2, 0, 2 * Math.PI);
-                ctx.fill();
-            });
-        }
+        const points = [[this.x1, this.y1], [this.x4, this.y4]];
+        points.forEach((point, index) => {
+            ctx.fillStyle = "red";
+            if (this.hoveredPoint === index) {
+                ctx.fillStyle = "white";
+            }
+            ctx.beginPath();
+            ctx.arc(point[0], point[1], 2, 0, 2 * Math.PI);
+            ctx.fill();
+        });
     }
 }
 
@@ -365,10 +353,6 @@ export class Path {
     }
 
     update(scene) {
-        if (!constants.EDIT_MODE || !constants.DEBUG) {
-            return;
-        }
-
         this.hoveredPart = this.partColliding(scene.mouse.x, scene.mouse.y, 10);
 
         this.parts.forEach(part => {
@@ -401,11 +385,11 @@ export class Path {
         }
     }
 
-    draw(ctx) {
+    draw(ctx, edit) {
         ctx.lineWidth = 2;
         this.parts.forEach((part, index) => {
             ctx.lineWidth = 1;
-            if (constants.EDIT_MODE && constants.DEBUG && index === this.hoveredPart) {
+            if (index === this.hoveredPart) {
                 ctx.strokeStyle = "blue";
                 ctx.fillStyle = 'black';
                 ctx.font = '16px Arial';

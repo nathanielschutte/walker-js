@@ -91,7 +91,7 @@ export class Scene {
 
         window.addEventListener('keydown', e => {
             const key = e.key;
-            if (key === ' ') {
+            if (key === ' ' || key === 'Tab' || key === 'Escape') {
                 e.preventDefault();
             }
             if (!this.keys[key]) {
