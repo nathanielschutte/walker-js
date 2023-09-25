@@ -105,18 +105,14 @@ export class State {
             return;
         }
 
-        if (this.mode === 'play') {
-            this.frameNum++;
-
-            if (this.playMode === 'playing') {
-                this.frameNumRound++;
-            }
-        }
+        this.frameNum++;
 
         if (this.playState !== 'playing') {
             return;
         }
 
+        this.frameNumRound++;
+        
         const travellerDestroy = [];
         this.travellers.forEach(traveller => {
             traveller.update();

@@ -118,17 +118,19 @@ export class Level {
     }
 
     createTestSpawn() {
-        // this.createTestSpawnInterval(100, tr.BLOON_BLUE);
+        this.createTestSpawnInterval(100, tr.BLOON_BLUE);
         // this.createTestSpawnInterval(200, tr.BLOON_PINK);
         // this.createTestSpawnInterval(420, tr.BLOON_BLACK);
         // this.createTestSpawnInterval(450, tr.BLOON_WHITE);
-
         return this;
     }
     
     createTestSpawnInterval(interval, type) {
         const { x, y } = this.state.paths[0].parts[0].getOrigin();
         setInterval(() => {
+            if (this.state.travellers.length > 1000) {
+                return;
+            }
             const traveller = new Traveller(x, y, this.state.paths[0], type);
             this.state.addTraveller(traveller);
         }, interval);
